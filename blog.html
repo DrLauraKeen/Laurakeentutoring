@@ -1,0 +1,471 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+@charset "utf-8";
+
+:root { --red: #8C2F2A; --red-dark: #611F1C; --red-deep: #4A1715; --marble: #EEE8D9; --marble-2: #E2D9C3; --marble-3: #D8CCAE; --ink: #2A231D; --ink-soft: #4A4038; --bronze: #5C7A6C; --bronze-dark: #3F5A4F; --gold: #B9944B; --gold-light: #D8B876; --max: 1120px; }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body { margin: 0px; background: var(--marble); color: var(--ink); font-family: "EB Garamond", Georgia, serif; font-size: 19px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+h1, h2, h3, .eyebrow, nav a, .btn, .crest-name { font-family: Cinzel, "Times New Roman", serif; }
+
+a { color: inherit; }
+
+img, svg { display: block; max-width: 100%; }
+
+.wrap { max-width: var(--max); margin: 0px auto; padding: 0px 32px; }
+
+a:focus-visible, button:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+.skip-link { position: absolute; left: -9999px; top: auto; background: var(--red-dark); color: var(--marble); padding: 12px 22px; z-index: 100; font-family: Cinzel, serif; font-size: 13px; letter-spacing: 1px; text-decoration: none; }
+
+.skip-link:focus { left: 16px; top: 16px; }
+
+.meander { height: 14px; width: 100%; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='14'><path d='M2 12 H12 V4 H22 V12 H32 V4 H42' stroke='%23B9944B' stroke-width='2' fill='none' stroke-linecap='square'/></svg>"); background-repeat: repeat-x; background-position: center center; background-size: 44px 14px; }
+
+.meander.on-red { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='14'><path d='M2 12 H12 V4 H22 V12 H32 V4 H42' stroke='%23EEE8D9' stroke-width='2' fill='none' stroke-linecap='square'/></svg>"); }
+
+header { position: sticky; top: 0px; z-index: 50; background: rgba(238, 232, 217, 0.92); backdrop-filter: blur(6px); border-bottom: 1px solid var(--marble-3); }
+
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 32px; max-width: var(--max); margin: 0px auto; }
+
+.brandmark { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+
+.brandmark .monogram { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 14px; letter-spacing: 0.5px; color: var(--red-dark); font-weight: 700; }
+
+.brandmark .name { font-size: 15px; letter-spacing: 2px; font-weight: 600; }
+
+.nav-right { display: flex; align-items: center; gap: 26px; }
+
+nav ul { list-style: none; display: flex; gap: 34px; margin: 0px; padding: 0px; }
+
+nav a { text-decoration: none; font-size: 13px; letter-spacing: 1.5px; color: var(--ink-soft); font-weight: 600; padding-bottom: 4px; border-bottom: 1px solid transparent; transition: border-color 0.25s, color 0.25s; }
+
+nav a:hover, nav a.active { color: var(--red-dark); border-color: var(--gold); }
+
+.nav-cta { padding: 9px 20px; font-size: 11px; letter-spacing: 1.5px; white-space: nowrap; }
+
+.nav-cta .cta-short { display: none; }
+
+.nav-toggle { display: none; background: none; border: 0px; cursor: pointer; }
+
+.nav-toggle span { display: block; width: 24px; height: 2px; background: var(--ink); margin: 5px 0px; }
+
+.btn { display: inline-block; font-size: 13px; letter-spacing: 2px; font-weight: 600; text-decoration: none; text-transform: uppercase; padding: 16px 38px; border: 1.5px solid var(--gold); color: var(--marble); background: transparent; position: relative; transition: background 0.3s, color 0.3s, transform 0.2s; cursor: pointer; }
+
+.btn:hover { background: var(--gold); color: var(--red-deep); transform: translateY(-1px); }
+
+.btn.solid { background: var(--gold); color: var(--red-deep); }
+
+.btn.solid:hover { background: var(--gold-light); }
+
+.btn.dark { border-color: var(--red-dark); color: var(--red-dark); }
+
+.btn.dark:hover { background: var(--red-dark); color: var(--marble); }
+
+section { padding: 96px 0px; }
+
+.section-head { max-width: 640px; margin: 0px auto 56px; text-align: center; }
+
+.section-head .eyebrow { color: var(--gold); }
+
+.section-head .eyebrow::before, .section-head .eyebrow::after { color: var(--gold); }
+
+h2 { font-size: clamp(28px, 4vw, 38px); letter-spacing: 1.5px; margin: 0px 0px 16px; color: var(--red-dark); }
+
+.section-head p { color: var(--ink-soft); font-size: 19px; }
+
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s, transform 0.7s; }
+
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+footer.site-footer { background: var(--ink); color: rgb(184, 174, 153); text-align: center; padding: 38px 32px; font-size: 13.5px; letter-spacing: 0.5px; }
+
+footer.site-footer .tag { font-family: Cinzel, serif; letter-spacing: 2px; color: var(--gold-light); font-size: 13px; margin-bottom: 10px; }
+
+.laurel.light { height: 24px; width: 150px; margin: 0px auto 14px; background-repeat: no-repeat; background-position: center; background-size: contain;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='40' viewBox='0 0 240 40'><g stroke='%23D8B876' stroke-width='1.4' fill='%23D8B876'><path d='M120 20 C 100 20, 80 10, 60 14' fill='none'/><ellipse cx='108' cy='16' rx='7' ry='3' transform='rotate(-20 108 16)'/><ellipse cx='94' cy='13' rx='7' ry='3' transform='rotate(-15 94 13)'/><ellipse cx='80' cy='12' rx='7' ry='3' transform='rotate(-10 80 12)'/><ellipse cx='66' cy='13' rx='7' ry='3' transform='rotate(-5 66 13)'/><path d='M120 20 C 140 20, 160 10, 180 14' fill='none'/><ellipse cx='132' cy='16' rx='7' ry='3' transform='rotate(20 132 16)'/><ellipse cx='146' cy='13' rx='7' ry='3' transform='rotate(15 146 13)'/><ellipse cx='160' cy='12' rx='7' ry='3' transform='rotate(10 160 12)'/><ellipse cx='174' cy='13' rx='7' ry='3' transform='rotate(5 174 13)'/></g></svg>"); }
+
+@media (max-width: 860px) {
+  nav ul { position: fixed; top: 66px; left: 0px; right: 0px; background: var(--marble); flex-direction: column; gap: 0px; border-bottom: 1px solid var(--marble-3); max-height: 0px; overflow: hidden; transition: max-height 0.3s; }
+  nav ul.open { max-height: 360px; }
+  nav ul li { border-top: 1px solid var(--marble-3); }
+  nav ul li a { display: block; padding: 16px 32px; }
+  .nav-toggle { display: block; }
+}
+
+@media (max-width: 480px) {
+  .brandmark .name { display: none; }
+  .nav-cta { padding: 8px 14px; }
+  .nav-cta .cta-full { display: none; }
+  .nav-cta .cta-short { display: inline; }
+}
+
+/* ===== Blog page additions ===== */
+
+.blog-hero { position: relative; background: radial-gradient(ellipse at top left, rgba(255,255,255,0.08), transparent 55%),
+      linear-gradient(180deg, rgba(140,47,42,0.91) 0%, rgba(97,31,28,0.94) 65%, rgba(74,23,21,0.97) 100%),
+      url("https://images.unsplash.com/photo-1601921004897-b7d582772a3e?fm=jpg&q=60&w=2000&auto=format&fit=crop") center 40% / cover no-repeat;
+      color: var(--marble); padding: 108px 32px 84px; text-align: center; overflow: hidden; }
+
+.blog-hero::before { content: ""; position: absolute; inset: 0px; background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.024) 0px, rgba(255, 255, 255, 0.024) 1px, transparent 1px, transparent 64px); pointer-events: none; }
+
+.blog-hero-inner { max-width: 720px; margin: 0px auto; position: relative; }
+
+.blog-hero h1 { font-family: "Cinzel Decorative", Cinzel, serif; font-weight: 700; font-size: clamp(32px, 5vw, 50px); letter-spacing: 2px; margin: 0px 0px 18px; text-shadow: rgba(255, 255, 255, 0.18) 0px 1px 0px, rgba(0, 0, 0, 0.45) 0px 2px 3px; }
+
+.blog-hero p.lede { font-size: 19px; line-height: 1.7; color: rgb(241, 234, 218); max-width: 600px; margin: 0px auto; }
+
+article.post { background: var(--marble); }
+
+.post-meta { text-align: center; font-family: Cinzel, serif; font-size: 12.5px; letter-spacing: 2px; color: var(--bronze-dark); text-transform: uppercase; margin: 0px 0px 10px; }
+
+.post-title { text-align: center; max-width: 760px; margin: 0px auto 8px; }
+
+.post-dek { text-align: center; max-width: 640px; margin: 0px auto 48px; color: var(--ink-soft); font-size: 19px; }
+
+.post-body { max-width: 720px; margin: 0px auto; }
+
+.post-body p { margin: 0px 0px 22px; font-size: 19px; }
+
+.post-body p.first-letter-drop::first-letter { font-family: "Cinzel Decorative", serif; font-size: 58px; float: left; line-height: 0.8; padding: 8px 10px 0px 0px; color: var(--red); font-weight: 700; }
+
+.post-body h3 { color: var(--red-dark); font-size: 24px; letter-spacing: 0.5px; margin: 44px 0px 18px; }
+
+.video-wrap { position: relative; padding-bottom: 56.25%; height: 0px; overflow: hidden; margin: 40px 0px; background: var(--ink); border: 5px double var(--gold); }
+
+.video-wrap iframe { position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: 0px; }
+
+.video-caption { text-align: center; font-size: 14px; letter-spacing: 0.5px; color: var(--ink-soft); font-style: italic; margin: -22px 0px 32px; }
+
+.post-image { margin: 40px 0px; border: 5px double var(--gold); background: var(--ink); overflow: hidden; }
+
+.post-image img { width: 100%; height: auto; display: block; }
+
+.image-caption { text-align: center; font-size: 14px; letter-spacing: 0.5px; color: var(--ink-soft); font-style: italic; margin: -22px 0px 32px; }
+
+.post-quote { background: var(--marble-2); border-left: 4px solid var(--gold); padding: 28px 32px; font-size: 19px; font-style: italic; color: var(--ink-soft); position: relative; margin: 36px 0px; }
+
+.post-quote::before { content: "\201C"; font-family: "Cinzel Decorative", serif; font-size: 54px; color: var(--gold); position: absolute; top: -4px; left: 12px; line-height: 1; }
+
+.post-quote span { display: block; margin-left: 22px; }
+
+.post-quote footer { margin-top: 14px; font-style: normal; font-size: 13px; letter-spacing: 1px; color: var(--red-dark); font-family: Cinzel, serif; }
+
+.post-sources { max-width: 720px; margin: 48px auto 0px; padding-top: 28px; border-top: 1px solid var(--marble-3); font-size: 15px; color: var(--ink-soft); }
+
+.post-sources h4 { font-family: Cinzel, serif; font-size: 13px; letter-spacing: 1.5px; color: var(--red-dark); text-transform: uppercase; margin: 0px 0px 12px; }
+
+.post-sources ul { margin: 0px; padding-left: 20px; }
+
+.post-sources li { margin-bottom: 6px; }
+
+.post-sources a { color: var(--red-dark); text-decoration: underline; }
+
+#post-cta { background: linear-gradient(180deg, rgba(74,23,21,0.93), rgba(97,31,28,0.90) 40%, rgba(140,47,42,0.88) 100%),
+      url("https://images.unsplash.com/photo-1682067648521-485b0260a681?fm=jpg&q=60&w=2000&auto=format&fit=crop") center 35% / cover no-repeat; color: var(--marble); text-align: center; }
+
+#post-cta .section-head p { color: rgb(234, 223, 200); }
+
+#post-cta h2 { color: var(--marble); }
+
+.contact-actions { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+
+@media (max-width: 480px) {
+  .post-body p.first-letter-drop::first-letter { font-size: 46px; }
+}
+
+</style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#8C2F2A">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%238C2F2A' stroke='%23B9944B' stroke-width='3'/><text x='32' y='41' font-family='Georgia, serif' font-size='24' font-weight='700' fill='%23D8B876' text-anchor='middle'>LK</text></svg>">
+
+<title>Classics News | Dr Laura Keen — Latin, Classical Civilisation &amp; Ancient Greek</title>
+<meta name="description" content="News and finds from the world of Classics — this month, why Christopher Nolan's The Odyssey has Classics departments buzzing.">
+<meta name="keywords" content="Classics news, Latin tutor blog, The Odyssey film Classics, Nolan Odyssey teaching, Homer in schools, Classical Civilisation news">
+<meta name="author" content="Dr Laura Keen">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://drlaurakeen.co.uk/blog.html">
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Odyssey Effect — Why Classics Departments Are Buzzing | Dr Laura Keen">
+<meta property="og:description" content="Christopher Nolan's The Odyssey has sent students and scholars back to Homer. A look at the academic excitement, plus the official trailer.">
+<meta property="og:url" content="https://drlaurakeen.co.uk/blog.html">
+<meta property="og:image" content="https://images.unsplash.com/photo-1601921004897-b7d582772a3e?fm=jpg&q=60&w=1200&h=630&fit=crop&auto=format">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Odyssey Effect — Why Classics Departments Are Buzzing">
+<meta name="twitter:description" content="Christopher Nolan's The Odyssey has sent students and scholars back to Homer. A look at the academic excitement, plus the official trailer.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1601921004897-b7d582772a3e?fm=jpg&q=60&w=1200&h=630&fit=crop&auto=format">
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link rel="preconnect" href="https://images.unsplash.com/">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&amp;family=Cinzel+Decorative:wght@700&amp;family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Odyssey Effect: Why Classics Departments Are Buzzing",
+  "url": "https://drlaurakeen.co.uk/blog.html",
+  "datePublished": "2026-08-01",
+  "author": { "@type": "Person", "name": "Dr Laura Keen" },
+  "publisher": { "@type": "Person", "name": "Dr Laura Keen" },
+  "description": "Christopher Nolan's The Odyssey has sent students and scholars back to Homer. A look at the academic excitement around the film, plus the official trailer."
+}
+</script>
+
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to content</a>
+
+<header>
+  <div class="nav-inner">
+    <a href="index.html#top" class="brandmark">
+      <span class="monogram">LK</span>
+      <span class="name">LAURA&nbsp;KEEN</span>
+    </a>
+    <div class="nav-right">
+      <nav>
+        <ul id="navList">
+          <li><a href="index.html#about">About</a></li>
+          <li><a href="index.html#teaching">Teaching</a></li>
+          <li><a href="index.html#approach">Approach</a></li>
+          <li><a href="blog.html" class="active" aria-current="true">Classics News</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="book.html" class="btn dark nav-cta"><span class="cta-full">Book a Lesson</span><span class="cta-short">Book</span></a>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="blog-hero">
+    <div class="blog-hero-inner">
+      <p class="eyebrow">FROM THE CLASSROOM</p>
+      <h1>Classics News</h1>
+      <p class="lede">Finds, publications, and the moments when the ancient world resurfaces in the modern one.</p>
+    </div>
+  </section>
+  <div class="meander"></div>
+
+  <article class="post">
+    <div class="wrap" style="padding-top:80px;">
+      <p class="post-meta reveal">August 2026 &middot; Dr Laura Keen</p>
+      <h2 class="post-title reveal">The Odyssey Effect: Why Classics Departments Are Buzzing</h2>
+      <p class="post-dek reveal">Christopher Nolan's <em>The Odyssey</em> has done in one summer what many of us spend careers trying to do — made Homer feel urgent again.</p>
+
+      <div class="post-body reveal">
+        <p class="first-letter-drop">This August, Classics News is given over entirely to a film. Christopher Nolan's adaptation of <em>The Odyssey</em> — starring Matt Damon as Odysseus, Tom Holland as Telemachus and Anne Hathaway as Penelope, shot on IMAX film and reportedly his most expensive production to date — opened in cinemas on 17 July, and it has done something I did not expect a Hollywood blockbuster to do: it has made staff-room conversations in Classics departments genuinely excited again.</p>
+
+        <h3>The trailer</h3>
+      </div>
+    </div>
+
+    <div class="wrap" style="max-width:820px;">
+      <div class="video-wrap reveal">
+        <iframe src="https://www.youtube-nocookie.com/embed/Mzw2ttJD2qQ" title="The Odyssey — Official Trailer" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" allowfullscreen=""></iframe>
+      </div>
+      <p class="video-caption reveal">The official trailer for <em>The Odyssey</em> (Universal Pictures, dir. Christopher Nolan)</p>
+    </div>
+
+    <div class="wrap">
+      <div class="post-body reveal">
+        <h3>A field usually starved of headlines, suddenly everywhere</h3>
+        <p>What's striking isn't just that a film about Homer exists — adaptations come and go — but the scale of the academic response building around it, much of it close to home. Cambridge's Faculty of Classics has been publishing a running commentary on the film: Professors Richard Hunter and Rebecca Laemmle discussing what Nolan does with the poem's underworld scene, and Professor Mary Beard, writing in <em>The Guardian</em> and <em>The Times</em>, weighing what the film keeps of Homer's wit and what it flattens. The Guardian has even run a beginner's guide to tackling the original text for anyone who leaves the cinema wanting more.</p>
+
+        <p>It isn't only happening in lecture halls. Regional branches of the Classical Association have been running Homer-themed book clubs and discussing group screenings, reporting that the film has already brought new faces to events that might otherwise pass unnoticed outside the subject's usual audience — while museums have built entire public programmes around the release.</p>
+
+        <div class="post-quote reveal">
+          <span>Every so often, popular culture hands Classics teachers a gift: a reason for a student to walk into the room already curious. Whatever you make of Nolan's choices, that's worth taking seriously.</span>
+          <footer>&mdash; DR LAURA KEEN</footer>
+        </div>
+
+        <h3>Using it in lessons, not just talking about it</h3>
+        <p>For teaching, the film's real value isn't as a substitute for the text but as a way in. Several university lecturers interviewed in the run-up to release described a straightforward approach that works just as well at GCSE and A Level: watch, then compare. Where does Nolan follow Homer closely? Where does he depart, and why might a director in 2026 make that choice? Those are exactly the questions that turn a set text into an argument worth having — and they travel well whether the student has read Robert Fagles, Emily Wilson, or is meeting Odysseus for the very first time.</p>
+
+        <p>If this is the term you finally sit down with the <em>Odyssey</em> in the original Greek, or want to bring some of that classroom energy into a GCSE or A Level Classical Civilisation module, I'd love to help.</p>
+      </div>
+
+      <div class="post-sources reveal">
+        <h4>Further reading</h4>
+        <ul>
+          <li><a href="https://www.theguardian.com/books/2026/jul/16/a-voyage-of-discovery-an-idiots-guide-to-reading-the-odyssey" target="_blank" rel="noopener">The Guardian — "A voyage of discovery: an idiot's guide to reading The Odyssey"</a></li>
+          <li><a href="https://www.classics.cam.ac.uk/news/cambridge-classicists-nolans-odyssey" target="_blank" rel="noopener">University of Cambridge, Faculty of Classics — "Cambridge Classicists on Nolan's Odyssey"</a></li>
+          <li><a href="https://www.cam.ac.uk/stories/homers-odyssey" target="_blank" rel="noopener">University of Cambridge — on retelling the <em>Odyssey</em>'s underworld scene</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <div class="meander"></div>
+
+  <article class="post">
+    <div class="wrap" style="padding-top:80px;">
+      <p class="post-meta reveal">July 2026 &middot; Dr Laura Keen</p>
+      <h2 class="post-title reveal">Reading the Unreadable: AI Gives Us Back a Lost Greek Voice</h2>
+      <p class="post-dek reveal">Buried by Vesuvius in AD 79 and unread ever since &mdash; a scorched papyrus has just given up thirty new lines of Greek philosophy, and machine learning is quietly rewriting how much of the ancient world we'll ever get to read.</p>
+
+      <div class="post-body reveal">
+        <p class="first-letter-drop">It's easy to assume the classical corpus is a fixed, finished thing &mdash; the texts we have are the texts there are. This spring's news from Cairo is a good reminder that isn't quite true. Researchers examining a papyrus fragment identified thirty previously unpublished verses by the Presocratic philosopher Empedocles, a genuinely rare addition to a body of work that survives mostly in tantalising fragments quoted by later authors.</p>
+
+        <h3>A find that reshapes, not just adds</h3>
+        <p>Empedocles is one of those figures every A Level Classical Civilisation student meets briefly and wishes they had more of: the philosopher who proposed that all matter is built from four eternal roots &mdash; earth, water, air and fire &mdash; locked in cycles of Love and Strife. Because so little of his poetry survives complete, every new line matters disproportionately. Scholars now have to weigh not just what these verses say, but how they might shift existing readings of the philosophy built around the fragments we already had.</p>
+      </div>
+    </div>
+
+    <div class="wrap" style="max-width:820px;">
+      <div class="post-image reveal">
+        <img src="https://collectionapi.metmuseum.org/api/collection/v1/iiif/248134/534364/main-image" alt="Ancient Greek papyrus fragment with lines from Homer's Odyssey, ca. 285–250 BCE" loading="lazy">
+      </div>
+      <p class="image-caption reveal">A Greek papyrus fragment carrying lines from Homer's <em>Odyssey</em>, ca. 285&ndash;250 BCE &mdash; the kind of everyday survival that projects like the Vesuvius Challenge are trying to multiply. (The Metropolitan Museum of Art, Public Domain)</p>
+    </div>
+
+    <div class="wrap">
+      <div class="post-body reveal">
+        <h3>The bigger story: scrolls nobody could open</h3>
+        <p>The Empedocles papyrus sits alongside an even more remarkable ongoing project: the Vesuvius Challenge, which uses X-ray scanning and machine learning to "virtually unroll" the carbonised scrolls from Herculaneum &mdash; scrolls so fragile that physically opening them destroys them. What began in 2023 as a handful of legible Greek words from one scroll has, over the past year, become a serious push to read entire scrolls in full, with hundreds more still waiting in storage.</p>
+
+        <h3>Why it's worth mentioning in lessons</h3>
+        <p>For students, this is a genuinely useful corrective to the idea that Classics is a fixed syllabus of texts settled centuries ago. It's also a nice way into talking about transmission &mdash; how fragile and accidental our access to the ancient world really is, and how much of what we call "the classics" survives by luck, later quotation, or, increasingly, twenty-first-century computer vision.</p>
+      </div>
+
+      <div class="post-sources reveal">
+        <h4>Further reading</h4>
+        <ul>
+          <li><a href="https://phys.org/news/2026-04-previously-unpublished-verses-empedocles-papyrus.html" target="_blank" rel="noopener">Phys.org &mdash; "Previously unpublished verses of Empedocles identified on papyrus"</a></li>
+          <li><a href="https://scrollprize.org" target="_blank" rel="noopener">The Vesuvius Challenge &mdash; scrollprize.org</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <div class="meander"></div>
+
+  <article class="post">
+    <div class="wrap" style="padding-top:80px;">
+      <p class="post-meta reveal">June 2026 &middot; Dr Laura Keen</p>
+      <h2 class="post-title reveal">Marble, Mud and Coin Hoards: A Season of Digs</h2>
+      <p class="post-dek reveal">From a bilingual price list carved into a Roman basilica to 200,000 animal bones telling the story of a Greek feast, early summer brought a run of finds that put real evidence behind the texts we teach.</p>
+
+      <div class="post-body reveal">
+        <p class="first-letter-drop">Term-time doesn't leave much room for archaeology news to filter into lessons, so this post is a round-up of the finds from earlier in the year that are worth returning to &mdash; each one a small, concrete way of making the ancient world feel less like a fixed text and more like an ongoing conversation with the evidence.</p>
+
+        <h3>A price list in two languages</h3>
+        <p>At Aphrodisias in modern Turkey, archaeologists have spent over two decades piecing together 275 marble fragments of the Prices Edict &mdash; the Emperor Diocletian's attempt to cap runaway inflation across the Roman Empire. What makes the inscription such a good teaching example is its bilingualism: the text runs in both Latin and Greek, a practical acknowledgement that most literate residents of the city could read Greek but not Latin. It's a small, vivid piece of evidence for how Rome's empire actually worked on the ground, language politics included.</p>
+      </div>
+    </div>
+
+    <div class="wrap" style="max-width:820px;">
+      <div class="post-image reveal">
+        <img src="https://images.unsplash.com/photo-1656506597782-fe80e07bf1fe?fm=jpg&amp;q=60&amp;w=2000&amp;auto=format&amp;fit=crop" alt="Ancient Greco-Roman marble ruins at Ephesus, Turkey" loading="lazy">
+      </div>
+      <p class="image-caption reveal">Marble ruins at Ephesus, Turkey &mdash; the same landscape of Greco-Roman inland Anatolia that Aphrodisias belongs to.</p>
+    </div>
+
+    <div class="wrap">
+      <div class="post-body reveal">
+        <h3>Feasting, coins, and a curse</h3>
+        <p>Elsewhere, a study of roughly 200,000 animal bones has reconstructed the scale and rhythm of public feasting in ancient Greece, while separate research into Roman coin hoards examined why so many caches were buried and simply never reclaimed &mdash; a quietly poignant detail about disrupted lives. A newly published Roman-era curse tablet, meanwhile, mixed Latin content with Greek lettering and invoked Egyptian deities against four named individuals, a reminder of how thoroughly these cultures overlapped in daily life, magic included.</p>
+
+        <h3>Bringing it into the classroom</h3>
+        <p>None of these finds need a full lesson built around them, but they're excellent five-minute hooks: a bilingual inscription for a discussion of language and empire, a curse tablet for anyone squeamish about "boring" epigraphy, or a coin hoard for a conversation about what the absence of evidence can tell us too.</p>
+      </div>
+
+      <div class="post-sources reveal">
+        <h4>Further reading</h4>
+        <ul>
+          <li><a href="https://archaeology.org/issues/january-february-2026/" target="_blank" rel="noopener">Archaeology Magazine &mdash; on the Prices Edict at Aphrodisias</a></li>
+          <li><a href="https://rogueclassicism.com/2026/06/28/rc-bulletin-june-28-2026/" target="_blank" rel="noopener">Rogue Classicism &mdash; RC Bulletin, 28 June 2026</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <div class="meander"></div>
+
+  <section id="post-cta">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow" style="color:var(--gold-light)">BEGIN</p>
+        <h2>Bring the Odyssey into your own lessons</h2>
+        <p>Whether it's GCSE Classical Civilisation, A Level Latin, or simply the pull of Homer after the cinema — let's talk about where to start.</p>
+      </div>
+      <div class="contact-actions reveal">
+        <a class="btn solid" href="book.html">Book a Free Intro Call</a>
+        <a class="btn" href="mailto:laurakeentutoring@gmail.com?subject=Latin%20%2F%20Classics%20Tuition%20Enquiry">Email Laura</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="laurel light" aria-hidden="true"></div>
+  <div class="tag">&middot;&nbsp;LAURA KEEN&nbsp;&middot;&nbsp;CLASSICA&nbsp;&middot;</div>
+  <div>&copy; <span id="year">2026</span> Dr Laura Keen &mdash; Latin, Classical Civilisation &amp; Ancient Greek</div>
+</footer>
+
+<script>
+// Mobile nav toggle
+(function () {
+  var toggle = document.getElementById('navToggle');
+  var list = document.getElementById('navList');
+  if (toggle && list) {
+    toggle.addEventListener('click', function () {
+      var open = list.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    list.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        list.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+})();
+
+// Scroll reveal
+(function () {
+  var items = document.querySelectorAll('.reveal');
+  if (!items.length) return;
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('is-visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  items.forEach(function (el) { observer.observe(el); });
+})();
+
+// Footer year
+(function () {
+  var year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+})();
+
+</script>
+
+</body></html>
