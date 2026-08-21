@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://drlaurakeen.co.uk/sitemap.xml
